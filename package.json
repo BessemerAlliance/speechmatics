@@ -1,0 +1,40 @@
+{
+  "name": "speechmatics",
+  "description": "Node module for Speechmatics API",
+  "version": "0.0.1",
+  "author": "Drew Fyock",
+  "bugs": {
+    "url": "https://github.com/bessemeralliance/speechmatics/issues"
+  },
+  "dependencies": {
+    "request": "^2.75.0"
+  },
+  "devDependencies": {
+    "async": "^2.0.0",
+    "eslint": "^3.6.1",
+    "eslint-config-airbnb-base": "^8.0.0",
+    "eslint-plugin-import": "^1.16.0",
+    "mocha": "^3.1.0",
+    "should": "^11.1.0"
+  },
+  "files": [
+    "lib"
+  ],
+  "homepage": "https://www.speechmatics.com/api-details",
+  "keywords": [
+    "alignment",
+    "speechmatics",
+    "transcription"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bessemeralliance/speechmatics.git"
+  },
+  "scripts": {
+    "lint": "eslint --fix --ignore-path .gitignore .",
+    "spec": "mocha",
+    "test": "npm run lint && npm run spec"
+  }
+}
