@@ -27,6 +27,7 @@ class Client {
     path = path.replace(':userId', this.userId);
     const options = Object.assign(opts, {
       method,
+      json: true,
       headers: this.headers,
       baseUrl: this.baseUrl,
       url: `/v${this.apiVersion}/${path}`,
