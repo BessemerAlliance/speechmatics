@@ -1,0 +1,2 @@
+<time=0.12>Hello<time=0.23> <markup> <time=0.34>world,<time=0.45> <!-- comment > comment --> <time=0.56>how<time=0.67> <time=0.78>are<time=0.89> <time=0.90>you?<time=1.00>
+<time=1.12>Goodnight<time=1.23> <markup> <time=1.34>moon,<time=1.45> <!-- comment > comment --> <time=1.56>time<time=1.67> <time=1.78>to<time=1.89> <time=1.90>sleep.<time=2.00>

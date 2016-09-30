@@ -3,6 +3,17 @@
 const request = require('request');
 const fs = require('fs');
 
+
+function SpeechmaticsError(obj) {
+  Error.captureStackTrace(this, this.constructor);
+  Object.assign(this, obj);
+  this.name = this.constructor.name;
+  this.statusCode = obj.code;
+  this.message = obj.error;
+}
+require('util').inherits(SpeechmaticsError, Error);
+
+
 class Client {
   constructor(userId, apiToken, opts) {
     if (!userId) throw new Error('API User ID required');
@@ -23,7 +34,12 @@ class Client {
     return this;
   }
 
-  makeRequest(method, path, opts, callback) {
+  makeRequest(method, path, opts, done) {
+    if (typeof opts === 'function') {
+      done = done || opts;
+      opts = {};
+    }
+
     path = path.replace(':userId', this.userId);
     const options = Object.assign(opts, {
       method,
@@ -37,22 +53,17 @@ class Client {
 
     request(options, (err, resp, body) => {
       if (!err && resp.statusCode >= 400) {
-        err = new Error(body);
+        err = new SpeechmaticsError(body);
       }
-      callback(err, body);
+      done(err, body);
     });
   }
 
-  get(path, opts, callback) {
-    if (typeof opts === 'function') {
-      callback = opts;
-      opts = {};
-    }
-
-    this.makeRequest('GET', path, opts, callback);
+  get(path, opts, done) {
+    this.makeRequest('GET', path, opts, done);
   }
 
-  post(path, opts, callback) {
+  post(path, opts, done) {
     const fd = Object.assign({
       model: 'en-US',
       diarisation: 'false',
@@ -70,49 +81,53 @@ class Client {
     }
     opts.formData = fd;
 
-    this.makeRequest('POST', path, opts, callback);
+    this.makeRequest('POST', path, opts, done);
   }
 
 
     /* User */
-  getUser(opts, callback) {
-    this.get('user/:userId/', opts, callback);
+  getUser(opts, done) {
+    done = done || opts;
+    this.get('user/:userId/', opts, (err, body) => done(err, body.user));
   }
 
-  getPayments(opts, callback) {
-    this.get('user/:userId/payments/', opts, callback);
+  getPayments(opts, done) {
+    done = done || opts;
+    this.get('user/:userId/payments/', opts, (err, body) => done(err, body.payments));
   }
 
-  getJobs(opts, callback) {
-    this.get('user/:userId/jobs/', opts, callback);
+  getJobs(opts, done) {
+    done = done || opts;
+    this.get('user/:userId/jobs/', opts, (err, body) => done(err, body.jobs));
   }
 
-  createJob(opts, callback) {
-    this.post('user/:userId/jobs/', opts, callback);
+  createJob(opts, done) {
+    this.post('user/:userId/jobs/', opts, done);
   }
 
-  getJob(jobId, opts, callback) {
-    this.get(`user/:userId/jobs/${jobId}/`, opts, callback);
+  getJob(jobId, opts, done) {
+    done = done || opts;
+    this.get(`user/:userId/jobs/${jobId}/`, opts, (err, body) => done(err, body.job));
   }
 
-  getTranscript(jobId, opts, callback) {
-    this.get(`user/:userId/jobs/${jobId}/transcript`, opts, callback);
+  getTranscript(jobId, opts, done) {
+    this.get(`user/:userId/jobs/${jobId}/transcript`, opts, done);
   }
 
-  getAlignment(jobId, opts, callback) {
-    this.get(`user/:userId/jobs/${jobId}/alignment`, opts, callback);
+  getAlignment(jobId, opts, done) {
+    this.get(`user/:userId/jobs/${jobId}/alignment`, opts, done);
   }
 
 
     /* Status */
-  getStatus(opts, callback) {
-    this.get('status', opts, callback);
+  getStatus(opts, done) {
+    this.get('status', opts, done);
   }
 
 
     /* Statics */
   static parseAligment(text) {
-    return text.split('\n').reduce((arr, line) => {
+    return text.toString().split('\n').reduce((arr, line) => {
       const re = /<time=(\d+\.\d+)>(\S*)<time=(\d+\.\d+)>/g;
       const words = [];
 

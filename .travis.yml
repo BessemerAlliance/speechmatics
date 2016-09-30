@@ -1,0 +1,14 @@
+sudo: required
+dist: trusty
+language: node_js
+node_js: '6'
+cache:
+  directories:
+  - node_modules
+deploy:
+  provider: npm
+  email: tech@bessemeralliance.com
+  api_key:
+    secure: Wl+liTL145pWc4KUA0ZZv9hq0o+y9ER1KuoSKPLRo2xBUbHaBS9Q3jSND6MJdA+vIbRV83apNlONkeyBGpSm6b43aflOX6i3ZmDxp6g9hnk6s6f6mw6kDy3xkjfK/dYXiQLjej7jJJUcJdfDSIjWdIKvd1FqRuDdGzRGSMatCnY=
+  on:
+    tags: true
