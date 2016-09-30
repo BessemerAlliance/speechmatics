@@ -55,6 +55,10 @@ class Client {
       if (!err && resp.statusCode >= 400) {
         err = new SpeechmaticsError(body);
       }
+      if (typeof body === 'object') {
+        const keys = Object.keys(body);
+        if (keys.length === 1) body = body[keys[0]];
+      }
       done(err, body);
     });
   }
@@ -64,6 +68,7 @@ class Client {
   }
 
   post(path, opts, done) {
+    opts = opts || {};
     const fd = Object.assign({
       model: 'en-US',
       diarisation: 'false',
@@ -87,18 +92,15 @@ class Client {
 
     /* User */
   getUser(opts, done) {
-    done = done || opts;
-    this.get('user/:userId/', opts, (err, body) => done(err, body.user));
+    this.get('user/:userId/', opts, done);
   }
 
   getPayments(opts, done) {
-    done = done || opts;
-    this.get('user/:userId/payments/', opts, (err, body) => done(err, body.payments));
+    this.get('user/:userId/payments/', opts, done);
   }
 
   getJobs(opts, done) {
-    done = done || opts;
-    this.get('user/:userId/jobs/', opts, (err, body) => done(err, body.jobs));
+    this.get('user/:userId/jobs/', opts, done);
   }
 
   createJob(opts, done) {
@@ -106,8 +108,7 @@ class Client {
   }
 
   getJob(jobId, opts, done) {
-    done = done || opts;
-    this.get(`user/:userId/jobs/${jobId}/`, opts, (err, body) => done(err, body.job));
+    this.get(`user/:userId/jobs/${jobId}/`, opts, done);
   }
 
   getTranscript(jobId, opts, done) {

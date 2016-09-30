@@ -50,9 +50,36 @@ sm.getStatus(opts, callback);
 /* Statics */
 Speechmatics.parseAligment(text);
 ```
+##### Gets
+
+If the response object has only a single key, the callback object is pared to that value. This provides a more simplified than the actual Speechmatics API. Specifically this applies, `getUser`, `getPayments`, `getJobs`, and `getJob`
+
+Example:
+
+According the Speechmatics API, a GET on `/user/$userId/` wil respond with:
+
+```json
+{
+  "user": {
+     "balance": 90,
+     "email": "demo@speechmatics.com",
+     "id": 1
+   }
+}
+```
+
+Whereas, this module will simply return the value of the `user` key:
+
+```js
+{
+  balance: 90,
+  email: 'demo@speechmatics.com',
+  id: userId
+}
+```
 
 ##### Create Job
 
-`sm.createJob` has a built-in nicety. Setting `opts.audioFilename` or `opts.textFilename` (for alignment) will read those files from the supplied paths as a [ReadStream](https://nodejs.org/api/fs.html#fs_class_fs_readstream), which will then be passed through to the request as the correct `formData` fields.
+`sm.createJob` has a built-in nicety. Setting `opts.audioFilename` or `opts.textFilename` (for alignment) will read those files from the supplied paths as a [ReadStream](https://nodejs.org/api/fs.html#fs_class_fs_readstream), which is then passed through to the request as the correct `formData` fields.
 
 *note: "auth_token" request parameter is automatically set based on apiKey*

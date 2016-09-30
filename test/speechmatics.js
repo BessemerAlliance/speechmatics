@@ -88,8 +88,6 @@ describe('Speechmatics API tests', function() {
         };
         nocker(`user/${userId}/`, 200, body);
         sm.getUser((err, user) => {
-          // console.log('user:', user);
-          // console.log('body:', body);
           user.should.eql(body.user);
           done(err);
         });
