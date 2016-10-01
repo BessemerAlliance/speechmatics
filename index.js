@@ -71,10 +71,13 @@ class Client {
     opts = opts || {};
     const fd = Object.assign({
       model: 'en-US',
-      diarisation: 'false',
-      notification: this.callbackUrl ? 'callback' : null,
-      callback: this.callbackUrl,
+      diarisation: 'false'
     }, opts.formData);
+
+    if (this.callbackUrl) {
+      fd.notification = 'callback';
+      fd.callback = this.callbackUrl;
+    }
 
     if (opts.audioFilename) {
       fd.data_file = fs.createReadStream(opts.audioFilename);

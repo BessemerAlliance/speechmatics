@@ -17,7 +17,6 @@ npm install speechmatics
 ```js
 const Speechmatics = require('speechmatics');
 const sm = new Speechmatics(userId, apiKey, options);
-
 ```
 
 `userId` and `apiKey` are required as the first two parameters for Speechmatics client instantiation. `options` are...optional. Defaults detailed below.

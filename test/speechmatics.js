@@ -3,6 +3,7 @@
 const Speechmatics = require('..');
 
 const fs = require('fs');
+const path = require('path');
 const should = require('should');
 const nock = require('nock');
 
@@ -12,9 +13,9 @@ const apiKey = 'token';
 const sm = new Speechmatics(userId, apiKey);
 const aligned = fs.readFileSync(`${__dirname}/fixtures/aligned.txt`);
 
-function nocker(path, statusCode, body) {
+function nocker(route, statusCode, body) {
   return nock(sm.baseUrl)
-    .get(`/v${sm.apiVersion}/${path}`)
+    .get(`/v${sm.apiVersion}/${route}`)
     .query(true)
     .delay(100)
     .reply(statusCode, body);
@@ -180,6 +181,29 @@ describe('Speechmatics API tests', function() {
           nocker(`user/${userId}/jobs/2/`, 200, body);
           sm.getJob(2, (err, payments) => {
             payments.should.eql(body.job);
+            done(err);
+          });
+        });
+
+        it('create a job', function (done) {
+          const body = {
+            balance: 95,
+            check_wait: 30,
+            cost: 5,
+            id: 20
+          };
+          const opts = {
+            audioFilename: path.join(__dirname, 'fixtures/zero.mp4'),
+            textFilename: path.join(__dirname, 'fixtures/zero.txt')
+          };
+          nock(sm.baseUrl)
+            .filteringRequestBody(() => '*')
+            .post(`/v${sm.apiVersion}/user/${userId}/jobs/`, '*')
+            .query(true)
+            .delay(200)
+            .reply(200, body);
+          sm.createJob(opts, (err, created) => {
+            created.should.eql(body);
             done(err);
           });
         });
