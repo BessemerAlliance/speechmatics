@@ -47,7 +47,7 @@ sm.getAlignment(jobId, opts, callback);
 sm.getStatus(opts, callback);
 
 /* Statics */
-Speechmatics.parseAligment(text);
+Speechmatics.parseAlignment(text);
 ```
 ##### Gets
 

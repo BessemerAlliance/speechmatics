@@ -277,9 +277,9 @@ describe('Speechmatics API tests', function() {
   });
 
   describe('Util tests', function () {
-    describe('Parse Aligment', function() {
+    describe('Parse Alignment', function() {
       it('should parse the alignment file as a javascript object', function () {
-        const parsed = Speechmatics.parseAligment(aligned);
+        const parsed = Speechmatics.parseAlignment(aligned);
         parsed.should.eql([{
           start: 0.12,
           end: 1,

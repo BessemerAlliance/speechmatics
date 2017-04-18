@@ -130,7 +130,7 @@ class Client {
 
 
     /* Statics */
-  static parseAligment(text) {
+  static parseAlignment(text) {
     return text.toString().split('\n').reduce((arr, line) => {
       const re = /<time=(\d+\.\d+)>(\S*)<time=(\d+\.\d+)>/g;
       const words = [];
