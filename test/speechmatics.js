@@ -208,6 +208,29 @@ describe('Speechmatics API tests', function() {
           });
         });
 
+        it('create a job from streams', function (done) {
+          const body = {
+            balance: 95,
+            check_wait: 30,
+            cost: 5,
+            id: 20
+          };
+          const opts = {
+            audioStream: fs.createReadStream(path.join(__dirname, 'fixtures/zero.mp4')),
+            textStream: fs.createReadStream(path.join(__dirname, 'fixtures/zero.txt'))
+          };
+          nock(sm.baseUrl)
+            .filteringRequestBody(() => '*')
+            .post(`/v${sm.apiVersion}/user/${userId}/jobs/`, '*')
+            .query(true)
+            .delay(200)
+            .reply(200, body);
+          sm.createJob(opts, (err, created) => {
+            created.should.eql(body);
+            done(err);
+          });
+        });        
+        
         it('get a transcript', function (done) {
           const body = {
             job: {
