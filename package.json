@@ -1,7 +1,7 @@
 {
   "name": "speechmatics",
   "description": "Node module for Speechmatics API",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "author": "Drew Fyock",
   "bugs": {
     "url": "https://github.com/bessemeralliance/speechmatics/issues"
