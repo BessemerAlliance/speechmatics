@@ -82,14 +82,14 @@ class Client {
     if (opts.audioFilename) {
       fd.data_file = fs.createReadStream(opts.audioFilename);
       delete opts.audioFilename;
-    } else if (opts.audioStream){
+    } else if (opts.audioStream) {
       fd.data_file = opts.audioStream;
       delete opts.audioStream;
     }
     if (opts.textFilename) {
       fd.text_file = fs.createReadStream(opts.textFilename);
       delete opts.textFilename;
-    } else if (opts.textStream){
+    } else if (opts.textStream) {
       fd.text_file = opts.textStream;
       delete opts.textStream;
     }

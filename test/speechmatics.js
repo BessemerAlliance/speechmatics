@@ -229,8 +229,8 @@ describe('Speechmatics API tests', function() {
             created.should.eql(body);
             done(err);
           });
-        });        
-        
+        });
+
         it('get a transcript', function (done) {
           const body = {
             job: {
