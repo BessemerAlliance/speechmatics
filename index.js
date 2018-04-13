@@ -70,11 +70,20 @@ class Client {
   post(path, opts, done) {
     opts = opts || {};
     var model = opts.model;
-    delete opts.model;
+    //default 
+    var diarisation = 'false';
+    if(opts.diarisation){
+        if(opts.diarisation === true){
+          diarisation = 'true';
+      }
+    }
     const fd = Object.assign({
       model: model, //eg 'en-US',
-      diarisation: 'false'
+      diarisation: diarisation,
     }, opts.formData);
+
+    delete opts.model;
+    delete opts.diarisation;
 
     if (this.callbackUrl) {
       fd.notification = 'callback';
