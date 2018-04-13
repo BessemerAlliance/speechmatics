@@ -109,7 +109,7 @@ sm.createJob({audioStream: existingReadStream}, callback);
 ```js
 var existingReadStream = fs.createReadStream("./zero.wav");
 sm.createJob({
-    audioStream: existingReadStream.
+    audioStream: existingReadStream,
     model: 'en',
     diarisation: true
   }, callback);
