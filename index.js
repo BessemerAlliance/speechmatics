@@ -70,7 +70,7 @@ class Client {
   post(path, opts, done) {
     opts = opts || {};
     const fd = Object.assign({
-      model: 'en-US',
+      model: opts.model, //eg 'en-US',
       diarisation: 'false'
     }, opts.formData);
 
