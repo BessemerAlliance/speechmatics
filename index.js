@@ -69,8 +69,12 @@ class Client {
 
   post(path, opts, done) {
     opts = opts || {};
-    var model = opts.model;
-    //default 
+    //default for language model is english global
+    var model = 'en';
+     if(opts.model){
+      model = opts.model;
+     }
+    //default for speaker diarization is off
     var diarisation = 'false';
     if(opts.diarisation){
         if(opts.diarisation === true){
@@ -78,10 +82,10 @@ class Client {
       }
     }
     const fd = Object.assign({
-      model: model, //eg 'en-US',
+      model: model, //eg: 'en-US',
       diarisation: diarisation,
     }, opts.formData);
-
+    //clean up model and diarization 
     delete opts.model;
     delete opts.diarisation;
 
