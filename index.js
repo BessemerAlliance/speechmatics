@@ -69,8 +69,10 @@ class Client {
 
   post(path, opts, done) {
     opts = opts || {};
+    var model = opts.model;
+    delete opts.model;
     const fd = Object.assign({
-      model: opts.model, //eg 'en-US',
+      model: model, //eg 'en-US',
       diarisation: 'false'
     }, opts.formData);
 
