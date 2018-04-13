@@ -82,7 +82,6 @@ Whereas, this module will simply return the value of the `user` key:
 `sm.createJob` has a built-in nicety. Setting `opts.audioFilename` or `opts.textFilename` (for alignment) will read those files from the supplied paths as a [ReadStream](https://nodejs.org/api/fs.html#fs_class_fs_readstream), which is then passed through to the request as the correct `formData` fields.
 
 
-`opts.model` to specify language to use for transcription eg `en-US`. See speechmatics documentation for more on this.
 
 
 You can also use the `opts.audioStream` and `opts.textStream` parameters to pass in readable streams. This is useful when uploading from a remote source, for example:
@@ -100,3 +99,20 @@ sm.createJob({audioStream: existingReadStream}, callback);
 ```
 
 *note: "auth_token" request parameter is automatically set based on apiKey*
+
+###### Languages
+
+- `opts.model` to specify language to use for transcription eg `en-US`. [See here for a list of supported languages](https://github.com/pietrop/Create-html-elements-for-speechmatics-languages/blob/master/languages.json).
+- `opts.diarisation` if you would like to know speakers for the transcription. Takes in boolean `true` or `false`.
+
+
+```js
+var existingReadStream = fs.createReadStream("./zero.wav");
+sm.createJob({
+    audioStream: existingReadStream.
+    model: 'en',
+    diarisation: true
+  }, callback);
+```
+
+
