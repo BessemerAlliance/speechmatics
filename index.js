@@ -69,10 +69,25 @@ class Client {
 
   post(path, opts, done) {
     opts = opts || {};
+    //default for language model is english global
+    var model = 'en';
+     if(opts.model){
+      model = opts.model;
+     }
+    //default for speaker diarization is off
+    var diarisation = 'false';
+    if(opts.diarisation){
+        if(opts.diarisation === true){
+          diarisation = 'true';
+      }
+    }
     const fd = Object.assign({
-      model: 'en-US',
-      diarisation: 'false'
+      model: model, //eg: 'en-US',
+      diarisation: diarisation,
     }, opts.formData);
+    //clean up model and diarization 
+    delete opts.model;
+    delete opts.diarisation;
 
     if (this.callbackUrl) {
       fd.notification = 'callback';
